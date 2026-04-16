@@ -14,6 +14,7 @@ import com.vernu.sms.AppConstants;
 import com.vernu.sms.dtos.SMSDTO;
 import com.vernu.sms.helpers.SharedPreferenceHelper;
 import com.vernu.sms.workers.SMSStatusUpdateWorker;
+import com.vernu.sms.R;
 
 
 public class SMSStatusReceiver extends BroadcastReceiver {
@@ -64,7 +65,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
     
     private void handleSentStatus(Context context, Intent intent, int resultCode, SMSDTO smsDTO) {
         long timestamp = System.currentTimeMillis();
-        String errorMessage = "";
+        String errorMessage;
         
         switch (resultCode) {
             case Activity.RESULT_OK:
@@ -73,7 +74,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.d(TAG, "SMS sent successfully - ID: " + smsDTO.getSmsId());
                 break;
             case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                errorMessage = "SMS failed on device. Common causes: no SMS credit on SIM, weak signal, or carrier blocked. Check SIM balance and signal, then try again.";
+                errorMessage = context.getString(R.string.sms_error_generic_failure);
                 int radioCode = intent.getIntExtra("errorCode", -1);
                 if (radioCode != -1) {
                     errorMessage += " (code " + radioCode + ")";
@@ -85,7 +86,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_ERROR_RADIO_OFF:
-                errorMessage = "Mobile radio is off (e.g. airplane mode). Turn off airplane mode and ensure cellular is on.";
+                errorMessage = context.getString(R.string.sms_error_radio_off);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -93,7 +94,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_ERROR_NULL_PDU:
-                errorMessage = "Message could not be sent; invalid format or carrier issue. Try a shorter message or different recipient.";
+                errorMessage = context.getString(R.string.sms_error_null_pdu);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -101,7 +102,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_ERROR_NO_SERVICE:
-                errorMessage = "No cellular service. Check signal and try again when you have coverage.";
+                errorMessage = context.getString(R.string.sms_error_no_service);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -109,7 +110,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_ERROR_LIMIT_EXCEEDED:
-                errorMessage = "Device/carrier send limit reached (too many SMS in a short time). Wait a few minutes or lower the send rate.";
+                errorMessage = context.getString(R.string.sms_error_limit_exceeded);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -117,7 +118,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_ERROR_SHORT_CODE_NOT_ALLOWED:
-                errorMessage = "Short code not allowed on this carrier. Use a full phone number.";
+                errorMessage = context.getString(R.string.sms_error_short_code_not_allowed);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -125,7 +126,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_ERROR_SHORT_CODE_NEVER_ALLOWED:
-                errorMessage = "Short codes are not supported on this carrier. Use a full phone number.";
+                errorMessage = context.getString(R.string.sms_error_short_code_never_allowed);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -133,7 +134,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.e(TAG, "SMS failed to send - ID: " + smsDTO.getSmsId() + ", Error code: " + resultCode + ", Error: " + errorMessage);
                 break;
             case SmsManager.RESULT_NETWORK_ERROR:
-                errorMessage = "Network error while sending. Check signal and try again.";
+                errorMessage = context.getString(R.string.sms_error_network_error);
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -142,7 +143,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 break;
             default:
                 String codeName = getResultCodeName(resultCode);
-                errorMessage = codeName != null ? codeName : ("Unknown error (code " + resultCode + ")");
+                errorMessage = codeName != null ? codeName : (context.getString(R.string.sms_error_unknown, resultCode));
                 smsDTO.setStatus("FAILED");
                 smsDTO.setFailedAtInMillis(timestamp);
                 smsDTO.setErrorCode(String.valueOf(resultCode));
@@ -156,7 +157,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
     
     private void handleDeliveredStatus(Context context, int resultCode, SMSDTO smsDTO) {
         long timestamp = System.currentTimeMillis();
-        String errorMessage = "";
+        String errorMessage;
         
         switch (resultCode) {
             case Activity.RESULT_OK:
@@ -165,7 +166,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 Log.d(TAG, "SMS delivered successfully - ID: " + smsDTO.getSmsId());
                 break;
             case Activity.RESULT_CANCELED:
-                errorMessage = "Delivery report was canceled (e.g. carrier does not support delivery receipts). Message may still have been delivered.";
+                errorMessage = context.getString(R.string.sms_delivery_error_canceled);
                 smsDTO.setStatus("DELIVERY_FAILED");
                 smsDTO.setErrorCode(String.valueOf(resultCode));
                 smsDTO.setErrorMessage(errorMessage);
@@ -173,7 +174,7 @@ public class SMSStatusReceiver extends BroadcastReceiver {
                 break;
             default:
                 String deliveryCodeName = getResultCodeName(resultCode);
-                errorMessage = deliveryCodeName != null ? deliveryCodeName : ("Unknown delivery error (code " + resultCode + ")");
+                errorMessage = deliveryCodeName != null ? deliveryCodeName : (context.getString(R.string.sms_delivery_error_unknown, resultCode));
                 smsDTO.setStatus("DELIVERY_FAILED");
                 smsDTO.setErrorCode(String.valueOf(resultCode));
                 smsDTO.setErrorMessage(errorMessage);

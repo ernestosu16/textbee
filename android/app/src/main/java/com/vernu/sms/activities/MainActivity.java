@@ -130,18 +130,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (deviceId == null || deviceId.isEmpty()) {
-            registerDeviceBtn.setText("Register");
+            registerDeviceBtn.setText(R.string.register_label);
         } else {
-            registerDeviceBtn.setText("Update");
+            registerDeviceBtn.setText(R.string.update_label);
         }
 
         String[] missingPermissions = Arrays.stream(AppConstants.requiredPermissions).filter(permission -> !TextBeeUtils.isPermissionGranted(mContext, permission)).toArray(String[]::new);
         if (missingPermissions.length == 0) {
             grantSMSPermissionBtn.setEnabled(false);
-            grantSMSPermissionBtn.setText("Permission Granted");
+            grantSMSPermissionBtn.setText(R.string.permissions_granted_label);
             renderAvailableSimOptions();
         } else {
-            Snackbar.make(grantSMSPermissionBtn, "Please Grant Required Permissions to continue: " + Arrays.toString(missingPermissions), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(grantSMSPermissionBtn, getString(R.string.permissions_not_granted_snackbar, Arrays.toString(missingPermissions)), Snackbar.LENGTH_SHORT).show();
             grantSMSPermissionBtn.setEnabled(true);
             grantSMSPermissionBtn.setOnClickListener(this::handleRequestPermissions);
         }
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
 
         copyDeviceIdImgBtn.setOnClickListener(view -> {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("Device ID", deviceId);
+            ClipData clip = ClipData.newPlainText(getString(R.string.device_id_clipboard_label), deviceId);
             clipboard.setPrimaryClip(clip);
-            Snackbar.make(view, "Copied", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, R.string.copied_toast, Snackbar.LENGTH_LONG).show();
         });
 
         apiKeyEditText.setText(SharedPreferenceHelper.getSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, ""));
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                         compoundButton.setEnabled(true);
                         return;
                     }
-                    Snackbar.make(view, "Gateway " + (isCheked ? "enabled" : "disabled"), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getString(R.string.gateway_label) + " " + (isCheked ? getString(R.string.enabled_label) : getString(R.string.disabled_label)), Snackbar.LENGTH_LONG).show();
                     SharedPreferenceHelper.setSharedPreferenceBoolean(mContext, AppConstants.SHARED_PREFS_GATEWAY_ENABLED_KEY, isCheked);
                     boolean enabled = Boolean.TRUE.equals(Objects.requireNonNull(response.body()).data.get("enabled"));
                     compoundButton.setChecked(enabled);
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                    Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, R.string.error_occurred_toast, Snackbar.LENGTH_LONG).show();
                     Log.e(TAG, "API_ERROR "+ t.getMessage());
                     Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                     TextBeeUtils.logException(t, "Error updating device");
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             View view = compoundButton.getRootView();
             SharedPreferenceHelper.setSharedPreferenceBoolean(mContext, AppConstants.SHARED_PREFS_RECEIVE_SMS_ENABLED_KEY, isCheked);
             compoundButton.setChecked(isCheked);
-            Snackbar.make(view, "Receive SMS " + (isCheked ? "enabled" : "disabled"), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, getString(R.string.receive_sms_label_simple) + " " + (isCheked ? getString(R.string.enabled_label) : getString(R.string.disabled_label)), Snackbar.LENGTH_LONG).show();
         });
 
         // Setup sticky notification switch
@@ -228,10 +228,10 @@ public class MainActivity extends AppCompatActivity {
             
             if (isChecked) {
                 TextBeeUtils.startStickyNotificationService(mContext);
-                Snackbar.make(view, "Background service enabled - app will be more reliable", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, R.string.background_service_enabled_toast, Snackbar.LENGTH_LONG).show();
             } else {
                 TextBeeUtils.stopStickyNotificationService(mContext);
-                Snackbar.make(view, "Background service disabled - app may be killed when in background", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, R.string.background_service_disabled_toast, Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
         });
         scanQRBtn.setOnClickListener(view -> {
             IntentIntegrator intentIntegrator = new IntentIntegrator(MainActivity.this);
-            intentIntegrator.setPrompt("Go to textbee.dev/dashboard and click Register Device to generate QR Code");
+            intentIntegrator.setPrompt(getString(R.string.scan_qr_prompt));
             intentIntegrator.setRequestCode(SCAN_QR_REQUEST_CODE);
             intentIntegrator.initiateScan();
         });
@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
             int defaultDelay = AppConstants.DEFAULT_SMS_SEND_DELAY_SECONDS;
             smsSendDelayEditText.setText(String.valueOf(defaultDelay));
             SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, defaultDelay);
-            Snackbar.make(smsSendDelayEditText, "SMS send delay saved (" + defaultDelay + " sec)", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(smsSendDelayEditText, getString(R.string.sms_send_delay_saved_toast, defaultDelay), Snackbar.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -304,21 +304,21 @@ public class MainActivity extends AppCompatActivity {
                 value = 0;
                 smsSendDelayEditText.setText("0");
                 SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, 0);
-                Snackbar.make(smsSendDelayEditText, "Minimum delay is 0 seconds. Saved.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(smsSendDelayEditText, R.string.min_delay_toast, Snackbar.LENGTH_SHORT).show();
             } else if (value > 3600) {
                 value = 3600;
                 smsSendDelayEditText.setText("3600");
                 SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, 3600);
-                Snackbar.make(smsSendDelayEditText, "Maximum delay is 3600 seconds. Saved.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(smsSendDelayEditText, R.string.max_delay_toast, Snackbar.LENGTH_SHORT).show();
             } else {
                 SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, value);
-                Snackbar.make(smsSendDelayEditText, "SMS send delay saved (" + value + " sec)", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(smsSendDelayEditText, getString(R.string.sms_send_delay_saved_toast, value), Snackbar.LENGTH_SHORT).show();
             }
         } catch (NumberFormatException e) {
             int defaultDelay = AppConstants.DEFAULT_SMS_SEND_DELAY_SECONDS;
             smsSendDelayEditText.setText(String.valueOf(defaultDelay));
             SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, defaultDelay);
-            Snackbar.make(smsSendDelayEditText, "Invalid value. Reset to " + defaultDelay + " sec.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(smsSendDelayEditText, getString(R.string.invalid_value_reset_toast, defaultDelay), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
             
             // Create the default radio button with proper styling
             RadioButton defaultSimSlotRadioBtn = new RadioButton(mContext);
-            defaultSimSlotRadioBtn.setText("Device Default");
+            defaultSimSlotRadioBtn.setText(R.string.device_default_sim);
             defaultSimSlotRadioBtn.setId((int)123456);
             applyRadioButtonStyle(defaultSimSlotRadioBtn);
             defaultSimSlotRadioGroup.addView(defaultSimSlotRadioBtn);
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
             // Create radio buttons for each SIM with proper styling
             TextBeeUtils.getAvailableSimSlots(mContext).forEach(subscriptionInfo -> {
                 String displayName = subscriptionInfo.getDisplayName() != null ? subscriptionInfo.getDisplayName().toString() : "Unknown";
-                String simInfo = displayName + " (Subscription ID: " + subscriptionInfo.getSubscriptionId() + ")";
+                String simInfo = getString(R.string.sim_subscription_label, displayName, subscriptionInfo.getSubscriptionId());
                 RadioButton radioButton = new RadioButton(mContext);
                 radioButton.setText(simInfo);
                 radioButton.setId(subscriptionInfo.getSubscriptionId());
@@ -363,14 +363,14 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 radioButton.setChecked(true);
-                if("Device Default".equals(radioButton.getText().toString())) {
+                if(getString(R.string.device_default_sim).equals(radioButton.getText().toString())) {
                     SharedPreferenceHelper.clearSharedPreference(mContext, AppConstants.SHARED_PREFS_PREFERRED_SIM_KEY);
                 } else {
                     SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_PREFERRED_SIM_KEY, radioButton.getId());
                 }
             });
         } catch (Exception e) {
-            Snackbar.make(defaultSimSlotRadioGroup.getRootView(), "Error: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(defaultSimSlotRadioGroup.getRootView(), getString(R.string.error_prefix, e.getMessage()), Snackbar.LENGTH_LONG).show();
             Log.e(TAG, "SIM_SLOT_ERROR "+ e.getMessage());
         }
     }
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         }
         
         // Final fallback to generic error with status code
-        return "An error occurred :( " + response.code();
+        return getString(R.string.error_occurred_with_code, response.code());
     }
     
     /**
@@ -458,12 +458,12 @@ public class MainActivity extends AppCompatActivity {
         }
         boolean allPermissionsGranted = Arrays.stream(permissions).allMatch(permission -> TextBeeUtils.isPermissionGranted(mContext, permission));
         if (allPermissionsGranted) {
-            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), "All Permissions Granted", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), R.string.all_permissions_granted_toast, Snackbar.LENGTH_SHORT).show();
             grantSMSPermissionBtn.setEnabled(false);
-            grantSMSPermissionBtn.setText("Permission Granted");
+            grantSMSPermissionBtn.setText(R.string.permissions_granted_label);
             renderAvailableSimOptions();
         } else {
-            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), "Please Grant Required Permissions to continue", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), R.string.grant_permissions_toast, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -472,15 +472,15 @@ public class MainActivity extends AppCompatActivity {
         String deviceIdInput = deviceIdEditText.getText().toString();
         
         registerDeviceBtn.setEnabled(false);
-        registerDeviceBtn.setText("Loading...");
+        registerDeviceBtn.setText(R.string.loading_label);
         View view = findViewById(R.id.registerDeviceBtn);
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Snackbar.make(view, "Failed to obtain FCM Token :(", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, R.string.fcm_token_failed_toast, Snackbar.LENGTH_LONG).show();
                         registerDeviceBtn.setEnabled(true);
-                        registerDeviceBtn.setText("Update");
+                        registerDeviceBtn.setText(R.string.update_label);
                         return;
                     }
                     String token = task.getResult();
@@ -521,11 +521,11 @@ public class MainActivity extends AppCompatActivity {
                                 if (!response.isSuccessful()) {
                                     Snackbar.make(view, extractErrorMessage(response), Snackbar.LENGTH_LONG).show();
                                     registerDeviceBtn.setEnabled(true);
-                                    registerDeviceBtn.setText("Update");
+                                    registerDeviceBtn.setText(R.string.update_label);
                                     return;
                                 }
                                 SharedPreferenceHelper.setSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, newKey);
-                                Snackbar.make(view, "Device Updated Successfully :)", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, R.string.device_updated_toast, Snackbar.LENGTH_LONG).show();
                                 
                                 // Update deviceId from response if available
                                 if (response.body() != null && response.body().data != null && response.body().data.get("_id") != null) {
@@ -564,17 +564,17 @@ public class MainActivity extends AppCompatActivity {
                                 VersionTracker.updateStoredVersion(mContext);
                                 
                                 registerDeviceBtn.setEnabled(true);
-                                registerDeviceBtn.setText("Update");
+                                registerDeviceBtn.setText(R.string.update_label);
                             }
                             
                             @Override
                             public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                                Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, R.string.error_occurred_toast, Snackbar.LENGTH_LONG).show();
                                 Log.e(TAG, "API_ERROR "+ t.getMessage());
                                 Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                                 TextBeeUtils.logException(t, "Error registering device");
                                 registerDeviceBtn.setEnabled(true);
-                                registerDeviceBtn.setText("Update");
+                                registerDeviceBtn.setText(R.string.update_label);
                             }
                         });
                         return;
@@ -588,11 +588,11 @@ public class MainActivity extends AppCompatActivity {
                                 if (!response.isSuccessful()) {
                                     Snackbar.make(view, extractErrorMessage(response), Snackbar.LENGTH_LONG).show();
                                     registerDeviceBtn.setEnabled(true);
-                                    registerDeviceBtn.setText("Update");
+                                    registerDeviceBtn.setText(R.string.update_label);
                                     return;
                                 }
                                 SharedPreferenceHelper.setSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, newKey);
-                                Snackbar.make(view, "Device Registration Successful :)", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, R.string.device_registered_toast, Snackbar.LENGTH_LONG).show();
                             
                             if (response.body() != null && response.body().data != null && response.body().data.get("_id") != null) {
                                 deviceId = response.body().data.get("_id").toString();
@@ -630,16 +630,16 @@ public class MainActivity extends AppCompatActivity {
                             VersionTracker.updateStoredVersion(mContext);
                             
                             registerDeviceBtn.setEnabled(true);
-                            registerDeviceBtn.setText("Update");
+                            registerDeviceBtn.setText(R.string.update_label);
                         }
                         @Override
                         public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                            Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, R.string.error_occurred_toast, Snackbar.LENGTH_LONG).show();
                             Log.e(TAG, "API_ERROR "+ t.getMessage());
                             Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                             TextBeeUtils.logException(t, "Error registering device");
                             registerDeviceBtn.setEnabled(true);
-                            registerDeviceBtn.setText("Update");
+                            registerDeviceBtn.setText(R.string.update_label);
                         }
                     });
                 });
@@ -651,15 +651,15 @@ public class MainActivity extends AppCompatActivity {
         String deviceIdToUse = !deviceIdInput.isEmpty() ? deviceIdInput : deviceId;
         
         registerDeviceBtn.setEnabled(false);
-        registerDeviceBtn.setText("Loading...");
+        registerDeviceBtn.setText(R.string.loading_label);
         View view = findViewById(R.id.registerDeviceBtn);
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Snackbar.make(view, "Failed to obtain FCM Token :(", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, R.string.fcm_token_failed_toast, Snackbar.LENGTH_LONG).show();
                         registerDeviceBtn.setEnabled(true);
-                        registerDeviceBtn.setText("Update");
+                        registerDeviceBtn.setText(R.string.update_label);
                         return;
                     }
                     String token = task.getResult();
@@ -697,7 +697,7 @@ public class MainActivity extends AppCompatActivity {
                             if (!response.isSuccessful()) {
                                 Snackbar.make(view, extractErrorMessage(response), Snackbar.LENGTH_LONG).show();
                                 registerDeviceBtn.setEnabled(true);
-                                registerDeviceBtn.setText("Update");
+                                registerDeviceBtn.setText(R.string.update_label);
                                 return;
                             }
                             SharedPreferenceHelper.setSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, apiKey);
@@ -736,19 +736,19 @@ public class MainActivity extends AppCompatActivity {
                             // Update stored version information
                             VersionTracker.updateStoredVersion(mContext);
                             
-                            Snackbar.make(view, "Device Updated Successfully :)", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, R.string.device_updated_toast, Snackbar.LENGTH_LONG).show();
                             registerDeviceBtn.setEnabled(true);
-                            registerDeviceBtn.setText("Update");
+                            registerDeviceBtn.setText(R.string.update_label);
                         }
 
                         @Override
                         public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                            Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, R.string.error_occurred_toast, Snackbar.LENGTH_LONG).show();
                             Log.e(TAG, "API_ERROR "+ t.getMessage());
                             Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                             TextBeeUtils.logException(t, "Error updating device");
                             registerDeviceBtn.setEnabled(true);
-                            registerDeviceBtn.setText("Update");
+                            registerDeviceBtn.setText(R.string.update_label);
                         }
                     });
                 });
@@ -757,11 +757,11 @@ public class MainActivity extends AppCompatActivity {
     private void handleRequestPermissions(View view) {
         boolean allPermissionsGranted = Arrays.stream(AppConstants.requiredPermissions).allMatch(permission -> TextBeeUtils.isPermissionGranted(mContext, permission));
         if (allPermissionsGranted) {
-            Snackbar.make(view, "Already got permissions", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, R.string.already_got_permissions_toast, Snackbar.LENGTH_SHORT).show();
             return;
         }
         String[] permissionsToRequest = Arrays.stream(AppConstants.requiredPermissions).filter(permission -> !TextBeeUtils.isPermissionGranted(mContext, permission)).toArray(String[]::new);
-        Snackbar.make(view, "Please Grant Required Permissions to continue", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, R.string.grant_permissions_toast, Snackbar.LENGTH_SHORT).show();
         ActivityCompat.requestPermissions(this, permissionsToRequest, PERMISSION_REQUEST_CODE);
     }
 
@@ -771,7 +771,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SCAN_QR_REQUEST_CODE) {
             IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (intentResult == null || intentResult.getContents() == null) {
-                Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), R.string.canceled_toast, Toast.LENGTH_SHORT).show();
                 return;
             }
             String scannedQR = intentResult.getContents();

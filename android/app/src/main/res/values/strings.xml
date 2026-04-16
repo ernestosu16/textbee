@@ -1,2 +1,152 @@
 <resources>
+    <string name="app_name">textbee.dev</string>
+    <string name="app_name_full">textbee.dev - sms gateway</string>
+    <string name="app_subtitle">Streamline your SMS workflows</string>
+    <string name="device_brand_model_placeholder">Device Brand, Model</string>
+    <string name="device_id_label">Device ID:</string>
+    <string name="device_id_placeholder">ae5ce05c05cde3</string>
+    <string name="status_label">Status</string>
+    <string name="account_info_title">Account Information</string>
+    <string name="device_id_hint">Device ID (optional)</string>
+    <string name="api_key_hint">API Key</string>
+    <string name="device_name_hint">Device name (optional)</string>
+    <string name="fcm_token_hint">FCM Token</string>
+    <string name="connect_button">Connect</string>
+    <string name="scan_qr_button">Scan QR</string>
+    <string name="configuration_title">Configuration</string>
+    <string name="sms_permissions_label">SMS Permissions</string>
+    <string name="grant_sms_permissions_button">Grant SMS Permissions</string>
+    <string name="receive_sms_label">Receive SMS</string>
+    <string name="receive_sms_description">Toggle to enable SMS receiving</string>
+    <string name="configure_filter_button">Configure Filter</string>
+    <string name="sticky_notification_label">Sticky Notification</string>
+    <string name="sticky_notification_description">Prevents app from being killed by the system (optional, but recommended for reliability)</string>
+    <string name="sms_send_delay_label">SMS Send Delay</string>
+    <string name="sms_send_delay_description">Delay between each SMS in seconds (0 = no delay, max 3600)</string>
+    <string name="sms_send_delay_hint">Delay (seconds)</string>
+    <string name="default_sim_label">Default SIM</string>
+    <string name="default_sim_description">This is the default SIM that will be used for sending SMS. You can override for individual SMS by providing the specific simSubscriptionId in your API request.</string>
+    <string name="how_to_use_title">How To Use</string>
+    <string name="step_1">1</string>
+    <string name="step_1_description">Go to https://textbee.dev/dashboard</string>
+    <string name="step_2">2</string>
+    <string name="step_2_description">Click \'Generate API Key / Get Started\'</string>
+    <string name="step_3">3</string>
+    <string name="step_3_description">Copy the API key or scan the QR code</string>
+    <string name="app_info_title">App Information</string>
+    <string name="version_label">Version: </string>
+    <string name="version_placeholder">1.0.0</string>
+    <string name="build_label"> (Build: </string>
+    <string name="build_placeholder">100</string>
+    <string name="build_closing">)</string>
+    <string name="check_for_updates_button">Check for Updates</string>
+    <string name="app_icon_desc">App Icon</string>
+    <string name="device_icon_desc">Device Icon</string>
+    <string name="copy_icon_desc">Copy Device ID</string>
+    <string name="info_icon_desc">Information Icon</string>
+
+    <!-- SMS Filter Activity -->
+    <string name="back_button_desc">Back</string>
+    <string name="sms_filter_title">SMS Filter</string>
+    <string name="sms_filter_description">Configure SMS filtering rules</string>
+    <string name="filter_settings_title">Filter Settings</string>
+    <string name="enable_filter_label">Enable Filter</string>
+    <string name="enable_filter_description">Enable SMS filtering</string>
+    <string name="filter_mode_title">Filter Mode</string>
+    <string name="allow_list_label">Allow List (only process SMS matching these filters)</string>
+    <string name="block_list_label">Block List (exclude these numbers/messages)</string>
+    <string name="filter_rules_title">Filter Rules</string>
+    <string name="add_rule_button_desc">Add Filter Rule</string>
+
+    <!-- Item Filter Rule -->
+    <string name="pattern_placeholder">Pattern</string>
+    <string name="match_type_placeholder">Match Type</string>
+    <string name="filter_target_placeholder">Filter Target</string>
+    <string name="edit_rule_desc">Edit rule</string>
+    <string name="delete_rule_desc">Delete rule</string>
+
+    <!-- Dialog Add Filter Rule -->
+    <string name="add_rule_title">Add Filter Rule</string>
+    <string name="pattern_hint">Pattern (phone number or text)</string>
+    <string name="filter_target_label">Filter Target</string>
+    <string name="match_type_label">Match Type</string>
+    <string name="case_sensitive_label">Case Sensitive</string>
+    <string name="case_sensitive_description">Match pattern with exact case</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+
+    <!-- Java Strings - MainActivity -->
+    <string name="register_label">Register</string>
+    <string name="update_label">Update</string>
+    <string name="permissions_granted_label">Permissions Granted</string>
+    <string name="all_permissions_granted_toast">All permissions granted</string>
+    <string name="grant_permissions_toast">Please grant necessary permissions to continue</string>
+    <string name="permissions_not_granted_snackbar">Please Grant Required Permissions to continue: %1$s</string>
+    <string name="already_got_permissions_toast">Already got permissions</string>
+    <string name="copied_toast">Copied</string>
+    <string name="device_id_clipboard_label">Device ID</string>
+    <string name="gateway_label">Gateway</string>
+    <string name="gateway_enabled_toast">Gateway enabled</string>
+    <string name="gateway_disabled_toast">Gateway disabled</string>
+    <string name="receive_sms_label_simple">Receive SMS</string>
+    <string name="receive_sms_enabled_toast">SMS receiving enabled</string>
+    <string name="receive_sms_disabled_toast">SMS receiving disabled</string>
+    <string name="background_service_enabled_toast">Background service enabled - app will be more reliable</string>
+    <string name="background_service_disabled_toast">Background service disabled - app might be killed</string>
+    <string name="device_default_sim">Device Default</string>
+    <string name="sim_subscription_label">%1$s (Subscription ID: %2$d)</string>
+    <string name="sms_send_delay_saved_toast">SMS send delay saved (%1$d sec)</string>
+    <string name="min_delay_toast">Minimum delay is 0 seconds. Saved.</string>
+    <string name="max_delay_toast">Maximum delay is 3600 seconds. Saved.</string>
+    <string name="invalid_value_reset_toast">Invalid value. Resetting to %1$d sec.</string>
+    <string name="error_occurred_toast">An error occurred :(</string>
+    <string name="error_occurred_with_code">An error occurred :( %1$d</string>
+    <string name="error_prefix">Error: %1$s</string>
+    <string name="device_updated_toast">Device updated successfully :)</string>
+    <string name="device_registered_toast">Device registration successful :)</string>
+    <string name="fcm_token_failed_toast">Fetching FCM Token failed :(</string>
+    <string name="loading_label">Loading...</string>
+    <string name="canceled_toast">Canceled</string>
+    <string name="scan_qr_prompt">Go to textbee.dev/dashboard and click Register Device to generate QR Code</string>
+
+    <!-- Java Strings - SMSFilterActivity -->
+    <string name="edit_filter_rule_title">Edit Filter Rule</string>
+    <string name="enter_pattern_toast">Please enter a pattern</string>
+    <string name="delete_rule_title">Delete Rule</string>
+    <string name="delete_rule_message">Are you sure you want to delete this filter rule?</string>
+    <string name="delete_button">Delete</string>
+    <string name="sender_label">Sender</string>
+    <string name="message_label">Message</string>
+    <string name="both_label">Both</string>
+    <string name="exact_match_label">Exact Match</string>
+    <string name="starts_with_label">Starts With</string>
+    <string name="ends_with_label">Ends With</string>
+    <string name="contains_label">Contains</string>
+    <string name="filter_sender_label">Filter: Sender</string>
+    <string name="filter_message_label">Filter: Message</string>
+    <string name="filter_both_label">Filter: Sender or Message</string>
+    <string name="filter_target_with_case">%1$s %2$s</string>
+    <string name="case_sensitive_suffix"> (Case Sensitive)</string>
+    <string name="case_insensitive_suffix"> (Case Insensitive)</string>
+    <string name="enabled_label">enabled</string>
+    <string name="disabled_label">disabled</string>
+
+    <!-- Notification Strings -->
+    <string name="notification_title">TextBee Active</string>
+    <string name="notification_text">SMS gateway service is active</string>
+    <string name="default_notification_channel_name">Default Channel</string>
+
+    <!-- SMS Status Errors -->
+    <string name="sms_error_generic_failure">SMS failed on device. Common causes: no SMS credit on SIM, weak signal, or carrier blocked. Check SIM balance and signal, then try again.</string>
+    <string name="sms_error_radio_off">Mobile radio is off (e.g. airplane mode). Turn off airplane mode and ensure cellular is on.</string>
+    <string name="sms_error_null_pdu">Message could not be sent; invalid format or carrier issue. Try a shorter message or different recipient.</string>
+    <string name="sms_error_no_service">No cellular service. Check signal and try again when you have coverage.</string>
+    <string name="sms_error_limit_exceeded">Device/carrier send limit reached (too many SMS in a short time). Wait a few minutes or lower the send rate.</string>
+    <string name="sms_error_short_code_not_allowed">Short code not allowed on this carrier. Use a full phone number.</string>
+    <string name="sms_error_short_code_never_allowed">Short codes are not supported on this carrier. Use a full phone number.</string>
+    <string name="sms_error_network_error">Network error while sending. Check signal and try again.</string>
+    <string name="sms_error_unknown">Unknown error (code %1$d)</string>
+    <string name="sms_permission_not_granted">SMS permission not granted</string>
+    <string name="sms_delivery_error_canceled">Delivery report was canceled (e.g. carrier does not support delivery receipts). Message may still have been delivered.</string>
+    <string name="sms_delivery_error_unknown">Unknown delivery error (code %1$d)</string>
 </resources>

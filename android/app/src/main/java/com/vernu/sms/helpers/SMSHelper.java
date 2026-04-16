@@ -148,7 +148,7 @@ public class SMSHelper {
         smsDTO.setStatus("FAILED");
         smsDTO.setFailedAtInMillis(System.currentTimeMillis());
         smsDTO.setErrorCode("PERMISSION_DENIED");
-        smsDTO.setErrorMessage("SMS permission not granted");
+        smsDTO.setErrorMessage(context.getString(com.vernu.sms.R.string.sms_permission_not_granted));
         
         updateSMSStatus(context, smsDTO);
     }

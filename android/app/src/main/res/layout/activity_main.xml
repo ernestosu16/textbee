@@ -28,14 +28,15 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                tools:ignore="UselessParent">
 
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="12dp"
                     android:src="@mipmap/ic_launcher"
-                    android:contentDescription="App Icon" />
+                    android:contentDescription="@string/app_icon_desc" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -45,7 +46,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="textbee.dev - sms gateway"
+                        android:text="@string/app_name_full"
                         android:textColor="@color/white"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -59,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Streamline your SMS workflows"
+                        android:text="@string/app_subtitle"
                         android:textColor="@color/white"
                         android:textSize="13sp"
                         android:letterSpacing="0.01"
@@ -92,7 +93,8 @@
                     android:layout_gravity="center"
                     android:padding="6dp"
                     android:src="@drawable/ic_baseline_phone_android_24"
-                    android:tint="?attr/colorPrimary" />
+                    app:tint="?attr/colorPrimary"
+                    android:contentDescription="@string/device_icon_desc" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -106,7 +108,7 @@
                         android:id="@+id/deviceBrandAndModelTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Device Brand, Model"
+                        android:text="@string/device_brand_model_placeholder"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -120,7 +122,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Device ID:"
+                            android:text="@string/device_id_label"
                             android:textColor="@color/text_secondary"
                             android:textSize="12sp" />
 
@@ -129,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="2dp"
-                            android:text="ae5ce05c05cde3"
+                            android:text="@string/device_id_placeholder"
                             android:textColor="@color/text_primary"
                             android:textSize="12sp" />
 
@@ -141,7 +143,8 @@
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:padding="4dp"
                             android:src="@drawable/ic_baseline_content_copy_24"
-                            android:tint="?attr/colorPrimary" />
+                            app:tint="?attr/colorPrimary"
+                            android:contentDescription="@string/copy_icon_desc" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -152,7 +155,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <Switch
+                    <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/gatewaySwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,7 +164,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status"
+                        android:text="@string/status_label"
                         android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -202,7 +205,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
-                        android:text="Account Information"
+                        android:text="@string/account_info_title"
                         android:textColor="@color/text_primary"
                         android:textSize="19sp"
                         android:textStyle="bold"
@@ -213,7 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:hint="Device ID (optional)"
+                        android:hint="@string/device_id_hint"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:boxStrokeColor="?attr/colorPrimary"
                         app:hintTextColor="?attr/colorPrimary"
@@ -229,14 +232,15 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:textColor="@color/text_primary"
-                            android:textIsSelectable="true" />
+                            android:textIsSelectable="true"
+                            android:autofillHints="none" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:hint="API Key"
+                        android:hint="@string/api_key_hint"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:boxStrokeColor="?attr/colorPrimary"
                         app:hintTextColor="?attr/colorPrimary"
@@ -249,14 +253,15 @@
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:textColor="@color/text_primary"
-                            android:textIsSelectable="true" />
+                            android:textIsSelectable="true"
+                            android:autofillHints="password" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:hint="Device name (optional)"
+                        android:hint="@string/device_name_hint"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:boxStrokeColor="?attr/colorPrimary"
                         app:hintTextColor="?attr/colorPrimary"
@@ -268,7 +273,8 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:textColor="@color/text_primary"
-                            android:textIsSelectable="true" />
+                            android:textIsSelectable="true"
+                            android:autofillHints="name" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <EditText
@@ -278,11 +284,12 @@
                         android:ems="10"
                         android:enabled="false"
                         android:gravity="start|top"
-                        android:hint="FCM Token"
+                        android:hint="@string/fcm_token_hint"
                         android:inputType="textMultiLine"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_secondary"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:autofillHints="none" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -297,7 +304,7 @@
                             android:backgroundTint="@color/button_background_tint"
                             android:paddingHorizontal="28dp"
                             android:paddingVertical="12dp"
-                            android:text="Connect"
+                            android:text="@string/connect_button"
                             android:textColor="@color/button_text_color"
                             android:textSize="15sp"
                             android:letterSpacing="0.01"
@@ -313,11 +320,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:drawableLeft="@drawable/ic_baseline_qr_code_24"
+                            android:drawableStart="@drawable/ic_baseline_qr_code_24"
                             android:drawablePadding="6dp"
                             android:paddingHorizontal="20dp"
                             android:paddingVertical="12dp"
-                            android:text="Scan QR"
+                            android:text="@string/scan_qr_button"
                             android:textColor="?attr/colorPrimary"
                             android:textSize="15sp"
                             android:letterSpacing="0.01"
@@ -351,7 +358,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
-                        android:text="Configuration"
+                        android:text="@string/configuration_title"
                         android:textColor="@color/text_primary"
                         android:textSize="19sp"
                         android:textStyle="bold"
@@ -367,7 +374,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SMS Permissions"
+                            android:text="@string/sms_permissions_label"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -379,7 +386,7 @@
                             android:backgroundTint="@color/button_background_tint"
                             android:paddingHorizontal="24dp"
                             android:paddingVertical="12dp"
-                            android:text="Grant SMS Permissions"
+                            android:text="@string/grant_sms_permissions_button"
                             android:textColor="@color/button_text_color"
                             android:textSize="15sp"
                             android:letterSpacing="0.01"
@@ -412,7 +419,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Receive SMS"
+                                android:text="@string/receive_sms_label"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -420,12 +427,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Toggle to enable SMS receiving"
+                                android:text="@string/receive_sms_description"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
-                        <Switch
+                        <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/receiveSMSSwitch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -438,7 +445,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:text="Configure Filter"
+                        android:text="@string/configure_filter_button"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="15sp"
                         android:letterSpacing="0.01"
@@ -465,7 +472,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sticky Notification"
+                                android:text="@string/sticky_notification_label"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -474,25 +481,27 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                tools:ignore="UseCompoundDrawables">
                                 
                                 <ImageView
                                     android:layout_width="18dp"
                                     android:layout_height="18dp"
                                     android:src="@android:drawable/ic_dialog_info"
-                                    android:tint="?attr/colorPrimary"
-                                    android:layout_marginEnd="6dp" />
+                                    app:tint="?attr/colorPrimary"
+                                    android:layout_marginEnd="6dp"
+                                    android:contentDescription="@string/info_icon_desc" />
                                 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Prevents app from being killed by the system (optional, but recommended for reliability)"
+                                    android:text="@string/sticky_notification_description"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
 
-                        <Switch
+                        <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/stickyNotificationSwitch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -516,7 +525,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SMS Send Delay"
+                            android:text="@string/sms_send_delay_label"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -526,7 +535,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="8dp"
-                            android:text="Delay between each SMS in seconds (0 = no delay, max 3600)"
+                            android:text="@string/sms_send_delay_description"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
                             android:lineSpacingMultiplier="1.2" />
@@ -534,7 +543,7 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Delay (seconds)"
+                            android:hint="@string/sms_send_delay_hint"
                             app:boxBackgroundColor="@android:color/transparent"
                             app:boxStrokeColor="?attr/colorPrimary"
                             app:hintTextColor="?attr/colorPrimary"
@@ -546,7 +555,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="@color/text_primary" />
+                                android:textColor="@color/text_primary"
+                                android:autofillHints="none" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
@@ -561,7 +571,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Default SIM"
+                        android:text="@string/default_sim_label"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -570,7 +580,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:text="This is the default SIM that will be used for sending SMS. You can override for individual SMS by providing the specific simSubscriptionId in your API request."
+                        android:text="@string/default_sim_description"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp"
                         android:lineSpacingMultiplier="1.2" />
@@ -605,7 +615,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:text="How To Use"
+                        android:text="@string/how_to_use_title"
                         android:textColor="@color/text_primary"
                         android:textSize="19sp"
                         android:textStyle="bold"
@@ -624,7 +634,7 @@
                             android:layout_marginEnd="12dp"
                             android:background="?attr/colorPrimary"
                             android:gravity="center"
-                            android:text="1"
+                            android:text="@string/step_1"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -633,7 +643,7 @@
                             android:id="@+id/dashboardLinkText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Go to https://textbee.dev/dashboard"
+                            android:text="@string/step_1_description"
                             android:textColor="?attr/colorPrimary"
                             android:autoLink="web"
                             android:linksClickable="true"
@@ -654,7 +664,7 @@
                             android:layout_marginEnd="12dp"
                             android:background="?attr/colorPrimary"
                             android:gravity="center"
-                            android:text="2"
+                            android:text="@string/step_2"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -662,7 +672,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Click 'Generate API Key / Get Started'"
+                            android:text="@string/step_2_description"
                             android:textColor="@color/text_primary" />
                     </LinearLayout>
 
@@ -678,7 +688,7 @@
                             android:layout_marginEnd="12dp"
                             android:background="?attr/colorPrimary"
                             android:gravity="center"
-                            android:text="3"
+                            android:text="@string/step_3"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -686,7 +696,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Copy the API key or scan the QR code"
+                            android:text="@string/step_3_description"
                             android:textColor="@color/text_primary" />
                     </LinearLayout>
                 </LinearLayout>
@@ -706,21 +716,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    tools:ignore="TooManyViews">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_horizontal">
+                        android:gravity="center_horizontal"
+                        tools:ignore="UselessParent">
 
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:src="@drawable/ic_baseline_info_24"
-                            android:tint="?attr/colorPrimary"
+                            app:tint="?attr/colorPrimary"
                             android:padding="4dp"
-                            android:layout_marginEnd="14dp" />
+                            android:layout_marginEnd="14dp"
+                            android:contentDescription="@string/info_icon_desc" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -730,7 +743,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="App Information"
+                                android:text="@string/app_info_title"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -744,7 +757,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Version: "
+                                    android:text="@string/version_label"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp" />
 
@@ -752,7 +765,7 @@
                                     android:id="@+id/appVersionNameTxt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="1.0.0"
+                                    android:text="@string/version_placeholder"
                                     android:textColor="@color/text_primary"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
@@ -760,7 +773,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text=" (Build: "
+                                    android:text="@string/build_label"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp"
                                     android:layout_marginStart="4dp" />
@@ -769,14 +782,14 @@
                                     android:id="@+id/appVersionCodeTxt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="100"
+                                    android:text="@string/build_placeholder"
                                     android:textColor="@color/text_primary"
                                     android:textSize="14sp" />
                                     
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text=")"
+                                    android:text="@string/build_closing"
                                     android:textColor="@color/text_secondary"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -786,7 +799,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="Check for Updates"
+                                android:text="@string/check_for_updates_button"
                                 android:textColor="?attr/colorPrimary"
                                 android:background="@android:color/transparent"
                                 android:textAllCaps="false"

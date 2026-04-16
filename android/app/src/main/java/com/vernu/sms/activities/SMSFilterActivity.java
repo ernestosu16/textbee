@@ -110,13 +110,13 @@ public class SMSFilterActivity extends AppCompatActivity {
         Button saveButton = dialogView.findViewById(R.id.saveButton);
 
         // Setup filter target spinner
-        String[] filterTargets = {"Sender", "Message", "Both"};
+        String[] filterTargets = {getString(R.string.sender_label), getString(R.string.message_label), getString(R.string.both_label)};
         ArrayAdapter<String> targetAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterTargets);
         targetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterTargetSpinner.setAdapter(targetAdapter);
 
         // Setup match type spinner
-        String[] matchTypes = {"Exact Match", "Starts With", "Ends With", "Contains"};
+        String[] matchTypes = {getString(R.string.exact_match_label), getString(R.string.starts_with_label), getString(R.string.ends_with_label), getString(R.string.contains_label)};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, matchTypes);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         matchTypeSpinner.setAdapter(spinnerAdapter);
@@ -131,7 +131,7 @@ public class SMSFilterActivity extends AppCompatActivity {
             matchTypeSpinner.setSelection(rule.getMatchType().ordinal());
             caseSensitiveSwitch.setChecked(rule.isCaseSensitive());
             if (dialogTitle != null) {
-                dialogTitle.setText("Edit Filter Rule");
+                dialogTitle.setText(R.string.edit_filter_rule_title);
             }
         } else {
             // Default to case insensitive
@@ -145,7 +145,7 @@ public class SMSFilterActivity extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             String pattern = patternEditText.getText() != null ? patternEditText.getText().toString().trim() : "";
             if (pattern.isEmpty()) {
-                Toast.makeText(this, "Please enter a pattern", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.enter_pattern_toast, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -175,14 +175,14 @@ public class SMSFilterActivity extends AppCompatActivity {
 
     private void deleteRule(int position) {
         new AlertDialog.Builder(this)
-            .setTitle("Delete Rule")
-            .setMessage("Are you sure you want to delete this filter rule?")
-            .setPositiveButton("Delete", (dialog, which) -> {
+            .setTitle(R.string.delete_rule_title)
+            .setMessage(R.string.delete_rule_message)
+            .setPositiveButton(R.string.delete_button, (dialog, which) -> {
                 filterConfig.getRules().remove(position);
                 adapter.notifyItemRemoved(position);
                 saveFilterConfig();
             })
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(R.string.cancel_button, null)
             .show();
     }
 
@@ -209,16 +209,16 @@ public class SMSFilterActivity extends AppCompatActivity {
             String matchTypeText = "";
             switch (rule.getMatchType()) {
                 case EXACT:
-                    matchTypeText = "Exact Match";
+                    matchTypeText = getString(R.string.exact_match_label);
                     break;
                 case STARTS_WITH:
-                    matchTypeText = "Starts With";
+                    matchTypeText = getString(R.string.starts_with_label);
                     break;
                 case ENDS_WITH:
-                    matchTypeText = "Ends With";
+                    matchTypeText = getString(R.string.ends_with_label);
                     break;
                 case CONTAINS:
-                    matchTypeText = "Contains";
+                    matchTypeText = getString(R.string.contains_label);
                     break;
             }
             holder.matchTypeText.setText(matchTypeText);
@@ -226,17 +226,17 @@ public class SMSFilterActivity extends AppCompatActivity {
             String filterTargetText = "";
             switch (rule.getFilterTarget()) {
                 case SENDER:
-                    filterTargetText = "Filter: Sender";
+                    filterTargetText = getString(R.string.filter_sender_label);
                     break;
                 case MESSAGE:
-                    filterTargetText = "Filter: Message";
+                    filterTargetText = getString(R.string.filter_message_label);
                     break;
                 case BOTH:
-                    filterTargetText = "Filter: Sender or Message";
+                    filterTargetText = getString(R.string.filter_both_label);
                     break;
             }
-            String caseText = rule.isCaseSensitive() ? " (Case Sensitive)" : " (Case Insensitive)";
-            holder.filterTargetText.setText(filterTargetText + caseText);
+            String caseText = rule.isCaseSensitive() ? getString(R.string.case_sensitive_suffix) : getString(R.string.case_insensitive_suffix);
+            holder.filterTargetText.setText(getString(R.string.filter_target_with_case, filterTargetText, caseText));
 
             holder.editButton.setOnClickListener(v -> showAddEditRuleDialog(position));
             holder.deleteButton.setOnClickListener(v -> deleteRule(position));

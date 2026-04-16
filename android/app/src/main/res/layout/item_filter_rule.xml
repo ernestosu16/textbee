@@ -25,7 +25,7 @@
                 android:id="@+id/patternText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pattern"
+                android:text="@string/pattern_placeholder"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Match Type"
+                android:text="@string/match_type_placeholder"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Filter Target"
+                android:text="@string/filter_target_placeholder"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -56,8 +56,8 @@
             android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_edit"
-            android:tint="?attr/colorPrimary"
-            android:contentDescription="Edit rule" />
+            app:tint="?attr/colorPrimary"
+            android:contentDescription="@string/edit_rule_desc" />
 
         <ImageButton
             android:id="@+id/deleteButton"
@@ -65,7 +65,7 @@
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_delete"
-            android:tint="#F44336"
-            android:contentDescription="Delete rule" />
+            app:tint="#F44336"
+            android:contentDescription="@string/delete_rule_desc" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

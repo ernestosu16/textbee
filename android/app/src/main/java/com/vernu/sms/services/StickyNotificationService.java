@@ -84,16 +84,16 @@ public class StickyNotificationService extends Service {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
             Notification.Builder builder = new Notification.Builder(this, notificationChannelId);
-            return builder.setContentTitle("TextBee Active")
-                    .setContentText("SMS gateway service is active")
+            return builder.setContentTitle(getString(R.string.notification_title))
+                    .setContentText(getString(R.string.notification_text))
                     .setContentIntent(pendingIntent)
                     .setOngoing(true)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .build();
         } else {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, notificationChannelId);
-            return builder.setContentTitle("TextBee Active")
-                    .setContentText("SMS gateway service is active")
+            return builder.setContentTitle(getString(R.string.notification_title))
+                    .setContentText(getString(R.string.notification_text))
                     .setOngoing(true)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .build();
